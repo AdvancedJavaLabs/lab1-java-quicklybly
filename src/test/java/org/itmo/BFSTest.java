@@ -1,14 +1,11 @@
 package org.itmo;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.function.BiFunction;
-import java.util.stream.IntStream;
+import org.itmo.bfs.impl.ParallelBfs;
+import org.itmo.bfs.impl.SimpleBfs;
+import org.junit.jupiter.api.Test;
 
 public class BFSTest {
 
@@ -34,19 +31,19 @@ public class BFSTest {
         }
     }
 
-
     private long executeSerialBfsAndGetTime(Graph g) {
+        var bfs = new SimpleBfs();
         long startTime = System.currentTimeMillis();
-        g.bfs(0);
+        bfs.bfs(g, 0);
         long endTime = System.currentTimeMillis();
         return endTime - startTime;
     }
 
     private long executeParallelBfsAndGetTime(Graph g) {
+        var bfs = new ParallelBfs();
         long startTime = System.currentTimeMillis();
-        g.parallelBFS(0);
+        bfs.bfs(g, 0);
         long endTime = System.currentTimeMillis();
         return endTime - startTime;
     }
-
 }
