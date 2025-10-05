@@ -3,11 +3,30 @@ package org.itmo;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import org.itmo.bfs.impl.ForkJoinBfs;
 import org.itmo.bfs.impl.ParallelBfs;
 import org.itmo.bfs.impl.SimpleBfs;
 import org.junit.jupiter.api.Test;
 
 public class BFSTest {
+
+    @Test
+    public void kek() {
+        int size = 1_000_000;
+        int connections = 10_000_000;
+
+        Random r = new Random(42);
+
+        var g = new RandomGraphGenerator().generateGraph(r, size, connections);
+
+        long time1 = executeSerialBfsAndGetTime(g);
+        long time2 = executeForkJoinBfs(g);
+
+        System.out.println("Serial " + time1);
+        System.out.println("ForkJoin " + time2);
+    }
 
     @Test
     public void bfsTest() throws IOException {
@@ -33,17 +52,29 @@ public class BFSTest {
 
     private long executeSerialBfsAndGetTime(Graph g) {
         var bfs = new SimpleBfs();
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         bfs.bfs(g, 0);
-        long endTime = System.currentTimeMillis();
-        return endTime - startTime;
+        long endTime = System.nanoTime();
+        return (endTime - startTime) / 1_000_000;
     }
 
     private long executeParallelBfsAndGetTime(Graph g) {
-        var bfs = new ParallelBfs();
-        long startTime = System.currentTimeMillis();
+        var bfs = new ParallelBfs(1);
+        long startTime = System.nanoTime();
         bfs.bfs(g, 0);
-        long endTime = System.currentTimeMillis();
-        return endTime - startTime;
+        long endTime = System.nanoTime();
+        return (endTime - startTime) / 1_000_000;
+    }
+
+    private long executeForkJoinBfs(Graph g) {
+        var bfs = new ForkJoinBfs();
+        long startTime = System.nanoTime();
+        try {
+            ForkJoinPool.commonPool().submit(() -> bfs.bfs(g, 0)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        long endTime = System.nanoTime();
+        return (endTime - startTime) / 1_000_000;
     }
 }
