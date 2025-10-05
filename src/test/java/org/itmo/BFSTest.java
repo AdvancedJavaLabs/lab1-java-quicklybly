@@ -29,6 +29,24 @@ public class BFSTest {
     }
 
     @Test
+    public void lotOfConnectionsTest() {
+        int size = 1_000_000;
+        int connections = 15_000_000;
+        Random r = new Random(42);
+
+        System.out.println("Generating graph of size " + size + " ...wait");
+        Graph g = new RandomGraphGenerator().generateGraph(r, size, connections);
+        System.out.println("Generation completed!\nStarting bfs");
+
+        long serialTime = executeSerialBfsAndGetTime(g);
+        long parallelTime = executeParallelBfsAndGetTime(g);
+
+        System.out.println("Times for " + size + " vertices and " + connections + " connections: ");
+        System.out.println("Serial: " + serialTime);
+        System.out.println("Parallel: " + parallelTime);
+    }
+
+    @Test
     public void bfsTest() throws IOException {
         int[] sizes = new int[]{10, 100, 1000, 10_000, 10_000, 50_000, 100_000, 1_000_000, 2_000_000};
         int[] connections = new int[]{50, 500, 5000, 50_000, 100_000, 1_000_000, 1_000_000, 10_000_000, 10_000_000};
@@ -40,9 +58,11 @@ public class BFSTest {
                 Graph g = new RandomGraphGenerator().generateGraph(r, sizes[i], connections[i]);
                 System.out.println("Generation completed!\nStarting bfs");
                 long serialTime = executeSerialBfsAndGetTime(g);
+                long forkJoinTime = executeForkJoinBfs(g);
                 long parallelTime = executeParallelBfsAndGetTime(g);
                 fw.append("Times for " + sizes[i] + " vertices and " + connections[i] + " connections: ");
                 fw.append("\nSerial: " + serialTime);
+                fw.append("\nForkJoin: " + forkJoinTime);
                 fw.append("\nParallel: " + parallelTime);
                 fw.append("\n--------\n");
             }
@@ -59,7 +79,8 @@ public class BFSTest {
     }
 
     private long executeParallelBfsAndGetTime(Graph g) {
-        var bfs = new ParallelBfs(1);
+        var runtime = Runtime.getRuntime().availableProcessors() * 2;
+        var bfs = new ParallelBfs(runtime);
         long startTime = System.nanoTime();
         bfs.bfs(g, 0);
         long endTime = System.nanoTime();
