@@ -1,10 +1,8 @@
 package org.itmo.bfs.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -26,13 +24,15 @@ public class ParallelFrontierBfs implements Bfs {
         var visited = new AtomicIntegerArray(graph.getSize());
         visited.set(startVertex, 1);
 
-        Collection<Integer> frontier = new ArrayList<>();
+        List<Integer> frontier = new ArrayList<>();
         frontier.add(startVertex);
 
         try (var es = Executors.newFixedThreadPool(threadNumber)) {
             while (!frontier.isEmpty()) {
-                // queue is bad for large parallelism factor
-                Queue<Integer> nextFrontier = new ConcurrentLinkedQueue<>();
+                final List<Integer> currentFrontier = frontier;
+
+                // we only need write synchronization, java doesn't have such list, writing it vpadlu
+                List<Integer> nextFrontier = Collections.synchronizedList(new ArrayList<>());
 
                 var butchSize = Math.max(1, frontier.size() / threadNumber);
 
@@ -44,7 +44,7 @@ public class ParallelFrontierBfs implements Bfs {
                     var future = es.submit(() ->
                             {
                                 for (int vertex = startIndex; vertex < lastIndex; vertex++) {
-                                    for (int neighbor : adjList[vertex]) {
+                                    for (int neighbor : adjList[currentFrontier.get(vertex)]) {
                                         if (visited.compareAndSet(neighbor, 0, 1)) {
                                             nextFrontier.add(neighbor);
                                         }
