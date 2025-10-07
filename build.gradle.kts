@@ -2,6 +2,8 @@ plugins {
     kotlin("jvm") version "1.9.20"
     java
     application
+    id("me.champeau.jmh") version "0.7.3"
+    // id("org.openjdk.jcstress") version "0.15"
 }
 
 group = "org.itmo"
@@ -27,6 +29,16 @@ kotlin {
 
 application {
     mainClass.set("MainKt")
+}
+
+jmh {
+    jvmArgs = listOf("--enable-native-access=ALL-UNNAMED", "--add-opens=java.base/java.lang=ALL-UNNAMED")
+}
+
+sourceSets {
+    test {
+        java.srcDirs("src/test/kotlin", "src/test/java")
+    }
 }
 
 // JCStress runner task: runs JCStress tests located on the test runtime classpath

@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import org.itmo.Graph;
 import org.itmo.bfs.Bfs;
 
+// unfortunately, this implementation is not working
 public class ParallelBfs implements Bfs {
 
     private final int threadNumber;
@@ -38,7 +39,7 @@ public class ParallelBfs implements Bfs {
                 });
     }
 
-    private record BfsWorker(
+    public record BfsWorker(
             Graph graph,
             AtomicIntegerArray distances,
             Queue<Integer> queue,

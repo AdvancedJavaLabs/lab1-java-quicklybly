@@ -1,54 +1,54 @@
 Times for 10 vertices and 50 connections: 
 Serial: 0
 ForkJoin: 1
-Frontier: 2
+Frontier: 1
 Parallel: 3
 --------
 Times for 100 vertices and 500 connections: 
 Serial: 0
-ForkJoin: 6
-Frontier: 7
+ForkJoin: 3
+Frontier: 5
 Parallel: 3
 --------
 Times for 1000 vertices and 5000 connections: 
-Serial: 0
-ForkJoin: 2
-Frontier: 37
-Parallel: 50
+Serial: 1
+ForkJoin: 7
+Frontier: 25
+Parallel: 20
 --------
 Times for 10000 vertices and 50000 connections: 
-Serial: 3
-ForkJoin: 16
-Frontier: 73
-Parallel: 29
+Serial: 4
+ForkJoin: 15
+Frontier: 33
+Parallel: 33
 --------
 Times for 10000 vertices and 100000 connections: 
-Serial: 2
-ForkJoin: 3
-Frontier: 16
-Parallel: 7
+Serial: 7
+ForkJoin: 4
+Frontier: 19
+Parallel: 5
 --------
 Times for 50000 vertices and 1000000 connections: 
 Serial: 28
-ForkJoin: 29
-Frontier: 72
-Parallel: 37
+ForkJoin: 21
+Frontier: 38
+Parallel: 43
 --------
 Times for 100000 vertices and 1000000 connections: 
-Serial: 53
-ForkJoin: 19
-Frontier: 48
-Parallel: 107
+Serial: 47
+ForkJoin: 36
+Frontier: 66
+Parallel: 60
 --------
 Times for 1000000 vertices and 10000000 connections: 
-Serial: 683
-ForkJoin: 307
-Frontier: 472
-Parallel: 679
+Serial: 525
+ForkJoin: 304
+Frontier: 538
+Parallel: 576
 --------
 Times for 2000000 vertices and 10000000 connections: 
-Serial: 927
-ForkJoin: 533
-Frontier: 775
-Parallel: 1113
+Serial: 876
+ForkJoin: 531
+Frontier: 702
+Parallel: 1061
 --------

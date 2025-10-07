@@ -39,6 +39,35 @@ public class BFSTest {
         }
     }
 
+    @Test
+    public void bfsThreadsTest() throws IOException {
+        int graphSize = 2_000_000;
+        int connections = 10_000_000;
+        int[] threadCounts = new int[]{1, 2, 4, 8, 12, 16, 24};
+        Random r = new Random(42);
+
+        System.out.println("Generating graph of size " + graphSize + " with " + connections + " connections... wait");
+        Graph g = new RandomGraphGenerator().generateGraph(r, graphSize, connections);
+        System.out.println("Graph generation completed!");
+
+        try (FileWriter fw = new FileWriter("tmp/threads_results.txt")) {
+            for (int threads : threadCounts) {
+                System.out.println("--------------------------");
+                System.out.println("Running BFS with " + threads + " threads");
+                var bfs = new ParallelFrontierBfs(threads);
+                long startTime = System.nanoTime();
+                bfs.bfs(g, 0);
+                long endTime = System.nanoTime();
+                long result = (endTime - startTime) / 1_000_000;
+
+                fw.append("Times for " + graphSize + " vertices, " + connections + " connections and " + threads + " threads:\n");
+                fw.append("Frontier: " + result + "\n");
+                fw.append("--------\n");
+                fw.flush();
+            }
+        }
+    }
+
     private long executeSerialBfsAndGetTime(Graph g) {
         var bfs = new SimpleBfs();
         long startTime = System.nanoTime();
