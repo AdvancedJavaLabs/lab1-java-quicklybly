@@ -1,0 +1,21 @@
+Times for 2000000 vertices, 10000000 connections and 1 threads:
+Frontier: 1027
+--------
+Times for 2000000 vertices, 10000000 connections and 2 threads:
+Frontier: 767
+--------
+Times for 2000000 vertices, 10000000 connections and 4 threads:
+Frontier: 694
+--------
+Times for 2000000 vertices, 10000000 connections and 8 threads:
+Frontier: 733
+--------
+Times for 2000000 vertices, 10000000 connections and 12 threads:
+Frontier: 816
+--------
+Times for 2000000 vertices, 10000000 connections and 16 threads:
+Frontier: 887
+--------
+Times for 2000000 vertices, 10000000 connections and 24 threads:
+Frontier: 814
+--------

@@ -1,0 +1,15 @@
+Benchmark                               (runtime)  Mode  Cnt    Score     Error  Units
+JmhBfsResourceTest.parallelBfs                  1  avgt    4  811.736 ± 532.065  ms/op
+JmhBfsResourceTest.parallelBfs                  2  avgt    4  800.443 ± 213.065  ms/op
+JmhBfsResourceTest.parallelBfs                  4  avgt    4  786.551 ± 188.788  ms/op
+JmhBfsResourceTest.parallelBfs                  6  avgt    4  746.592 ± 310.785  ms/op
+JmhBfsResourceTest.parallelBfs                 12  avgt    4  726.113 ± 108.879  ms/op
+JmhBfsResourceTest.parallelBfs                 16  avgt    4  746.983 ± 143.357  ms/op
+JmhBfsResourceTest.parallelBfs                 24  avgt    4  787.820 ± 211.231  ms/op
+JmhBfsResourceTest.parallelFrontierBfs          1  avgt    4  967.328 ± 479.491  ms/op
+JmhBfsResourceTest.parallelFrontierBfs          2  avgt    4  623.180 ± 302.594  ms/op
+JmhBfsResourceTest.parallelFrontierBfs          4  avgt    4  558.315 ± 282.455  ms/op
+JmhBfsResourceTest.parallelFrontierBfs          6  avgt    4  732.789 ± 298.786  ms/op
+JmhBfsResourceTest.parallelFrontierBfs         12  avgt    4  798.175 ± 286.191  ms/op
+JmhBfsResourceTest.parallelFrontierBfs         16  avgt    4  746.080 ± 201.253  ms/op
+JmhBfsResourceTest.parallelFrontierBfs         24  avgt    4  775.214 ± 253.786  ms/op
